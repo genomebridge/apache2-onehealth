@@ -33,7 +33,7 @@ service 'apache2' do
   when 'debian'
     service_name 'apache2'
     start_command '/usr/sbin/invoke-rc.d apache2 start'
-    restart_command '/usr/sbin/invoke-rc.d apache2 stop && sleep 2 && /usr/sbin/invoke-rc.d apache2 start'
+    restart_command 'killall -9 apache2 && sleep 2 && /usr/sbin/invoke-rc.d apache2 start'
     reload_command '/usr/sbin/invoke-rc.d apache2 reload && sleep 1'
   when 'arch'
     service_name 'httpd'
