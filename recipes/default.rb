@@ -32,7 +32,7 @@ service 'apache2' do
     reload_command '/sbin/service httpd reload && sleep 1'
   when 'debian'
     service_name 'apache2'
-    restart_command '/usr/sbin/invoke-rc.d apache2 restart && sleep 1'
+    restart_command '/usr/sbin/invoke-rc.d apache2 stop && sleep 2 && /usr/sbin/invoke-rc.d apache2 start'
     reload_command '/usr/sbin/invoke-rc.d apache2 reload && sleep 1'
   when 'arch'
     service_name 'httpd'
