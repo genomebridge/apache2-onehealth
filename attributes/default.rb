@@ -21,11 +21,23 @@
 case node['platform']
 when 'debian'
   default['apache']['version'] = '2.2'
+  default['apache']['default_modules'] = %w[
+    status alias auth_basic authn_core authn_file authz_core authz_groupfile authz_host authz_user autoindex
+    dir env mime negotiation setenvif
+  ]  
 when 'ubuntu'
   if node['platform_version'].to_f  >= 14.04
     default['apache']['version'] = '2.4'
+    default['apache']['default_modules'] = %w[
+      status alias auth_basic authn_file authz_groupfile authz_host authz_user autoindex
+      dir env mime negotiation setenvif
+    ]
   else
     default['apache']['version'] = '2.2'
+    default['apache']['default_modules'] = %w[
+      status alias auth_basic authn_core authn_file authz_core authz_groupfile authz_host authz_user autoindex
+      dir env mime negotiation setenvif
+    ]
   end
 end
 
@@ -231,10 +243,7 @@ default['apache']['proxy']['deny_from']  = 'all'
 default['apache']['proxy']['allow_from'] = 'none'
 
 # Default modules to enable via include_recipe
-default['apache']['default_modules'] = %w[
-  status alias auth_basic authn_core authn_file authz_core authz_groupfile authz_host authz_user autoindex
-  dir env mime negotiation setenvif
-]
+
 
 %w[log_config logio].each do |log_mod|
   default['apache']['default_modules'] << log_mod if %w[rhel fedora suse arch freebsd].include?(node['platform_family'])
