@@ -18,7 +18,17 @@
 # limitations under the License.
 #
 
-default['apache']['version'] = '2.4'
+case node['platform']
+when 'debian'
+  default['apache']['version'] = '2.2'
+when 'ubuntu'
+  if node['platform_version'].to_f  >= 14.04
+    default['apache']['version'] = '2.4'
+  else
+    default['apache']['version'] = '2.2'
+  end
+end
+
 default['apache']['root_group'] = 'root'
 
 # Where the various parts of apache are
