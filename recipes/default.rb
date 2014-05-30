@@ -224,5 +224,5 @@ apache_site 'default' do
 end
 
 service 'apache2' do
-  action :start
+  action :restart
 end
